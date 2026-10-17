@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Países</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container py-5">
+        <!-- Encabezado y Botones de Acción Global -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <h1 class="h3 text-primary fw-bold">🌎 CRUD de Países (Paises_7A)</h1>
+            <div class="d-flex gap-2">
+                <% if (puedeRevertir) { %>
+                    <a href="/revertir" class="btn btn-secondary fw-semibold shadow-sm">
+                        ↩️ Revertir Última Eliminación
+                    </a>
+                <% } %>
+                <a href="/reset" class="btn btn-warning fw-semibold shadow-sm" onclick="return confirm('¿Estás seguro de restablecer todos los datos a su estado original?')">
+                    🔄 Restablecer Datos Originales
+                </a>
+            </div>
+        </div>
+
+        <!-- Formulario para Agregar -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Agregar Nuevo País</h5>
+                <form action="/agregar" method="POST" class="row g-3">
+                    <div class="col-md-9">
+                        <input type="text" name="pais_descripcion" class="form-control" placeholder="Nombre del país" required>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-success w-100">Guardar País</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tabla de Países -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 mb-3">Lista de Países</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="width: 10%;">#</th>
+                                <th scope="col" style="width: 50%;">País</th>
+                                <th scope="col" style="width: 40%;" class="text-center">Acciones / Maestro-Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% paises.forEach((pais, index) => { %>
+                                <tr>
+                                    <td class="fw-bold"><%= index + 1 %></td>
+                                    <td><%= pais.pais_descripcion %></td>
+                                    <td class="text-center">
+                                        <a href="/provincias/<%= pais.pais_id %>" class="btn btn-sm btn-outline-info me-1">Ver Provincias</a>
+                                        <a href="/editar/<%= pais.pais_id %>" class="btn btn-sm btn-outline-primary me-1">Editar</a>
+                                        <a href="/eliminar/<%= pais.pais_id %>" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Seguro que deseas eliminar este país?')">Eliminar</a>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
